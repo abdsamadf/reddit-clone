@@ -1,12 +1,13 @@
-import { authModalAtom } from '@/src/atoms/authModalAtom'
+import { authModalState } from '@/src/atoms/authModalAtom'
 import { Input, Button, Flex, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useSetRecoilState } from 'recoil'
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import { auth } from '@/src/firebase/clientApp'
+import { FIREBASE_ERRORS } from '@/src/firebase/errors'
 
 const SignUp = () => {
-  const setModalState = useSetRecoilState(authModalAtom)
+  const setModalState = useSetRecoilState(authModalState)
   const [signUpForm, setSignUpForm] = useState({
     email: '',
     password: '',
@@ -115,7 +116,7 @@ const SignUp = () => {
           color="red"
           fontSize="10pt"
         >
-          {error || userError.message}
+          {error || FIREBASE_ERRORS[userError?.message as keyof typeof FIREBASE_ERRORS]}
         </Text>
       )
       }
